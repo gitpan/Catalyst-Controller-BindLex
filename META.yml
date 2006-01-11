@@ -1,0 +1,19 @@
+---
+name: Catalyst-Controller-BindLex
+version: 0.01
+author: ~
+abstract: Stash your lexical goodness.
+license: perl
+requires:
+  Array::RefElem: 0
+  Catalyst: 0
+  Devel::Caller: 0
+  Devel::LexAlias: 0
+  PadWalker: 0
+  Test::use::ok: 0
+  perl: 5.8.1
+provides:
+  Catalyst::Controller::BindLex:
+    file: lib/Catalyst/Controller/BindLex.pm
+    version: 0.01
+generated_by: Module::Build version 0.2611
