@@ -10,7 +10,7 @@ sub Catalyst::Controller::BindLex::stash { $_[0]->{stash} };
 
 {
     package MyApp;
-    use base qw/Catalyst::Controller::BindLex/;
+    use base qw/Catalyst::Controller::BindLex Catalyst/;
 
     sub bar {
         my ( $self, $c ) = @_;

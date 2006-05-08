@@ -13,9 +13,10 @@ use PadWalker       ();
 use Array::RefElem  ();
 use Devel::Caller   ();
 use Devel::LexAlias ();
+use Scalar::Util    ();
 use Carp            ();
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 __PACKAGE__->config( bindlex => { map { ucfirst() . 'ed' => $_, ucfirst() => $_} qw/stash session flash/ } );
 
@@ -76,8 +77,13 @@ sub _get_c_obj {
     # used to find $c from some catalyst action called long long ago
     # needed in the attribute handlers
     my $level = shift; # how many levels to go up the stack
-    ( Devel::Caller::caller_args($level) )[1] # ( $self, $c )[1]
-      || die "panic: Can't find \$c object";
+
+    for ( my $i = 0; $i < 10; $i++ ) {
+        my $c = ( eval { Devel::Caller::caller_args($level + $i) } )[1]; # ( $self, $c )[1]
+        return $c if Scalar::Util::blessed($c) and $c->isa("Catalyst"); # FIXME Catalyst::Context ?
+    }
+
+    die "panic: Can't find \$c object";
 }
 
 sub _find_in_pad {
@@ -229,6 +235,22 @@ Some default attributes are pre-configured:
 Bind the variable to a key in C<stash>, C<session> or C<flash> respetively.
 
 The latter two require the use of 
+
+=back
+
+=head1 RECIPES
+
+=over 4
+
+=item Param
+
+To get 
+
+    my $username : Param;
+
+add
+
+    __PACKAGE__->config->{bindlex}{Param} => sub { $_[0]->req->params };
 
 =back
 

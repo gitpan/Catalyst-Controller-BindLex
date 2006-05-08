@@ -70,6 +70,16 @@ DEFAULT ATTRIBUTES
 
         The latter two require the use of
 
+RECIPES
+    Param
+        To get
+
+            my $username : Param;
+
+        add
+
+            __PACKAGE__->config->{bindlex}{Param} => sub { $_[0]->req->params };
+
 AUTHORS
     Matt S. Trout
 
