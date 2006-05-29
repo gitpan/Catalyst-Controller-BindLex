@@ -16,9 +16,11 @@ use Devel::LexAlias ();
 use Scalar::Util    ();
 use Carp            ();
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
-__PACKAGE__->config( bindlex => { map { ucfirst() . 'ed' => $_, ucfirst() => $_} qw/stash session flash/ } );
+sub bindlex_default_config {
+    map { ucfirst() . 'ed' => $_, ucfirst() => $_} qw/stash session flash/;
+}
 
 sub _bind_lex {
     my ( $self, $c, $store, $ref, $varname ) = @_;
@@ -126,10 +128,11 @@ sub _handle_bindlex_attrs {
     # the attributes we didn't handle
     my @remain;
 
-    my $config = $pkg->config->{bindlex};
+    # FIXME this should be gone by 5.7 when config was fixed for subclassing
+    my %config = ( $pkg->bindlex_default_config, %{ $pkg->config->{bindlex} || {} });
 
     foreach my $attr ( @attrs ) {
-        if ( my $handler = $config->{$attr} ) {
+        if ( my $handler = $config{$attr} ) {
             if ( !ref $handler ) {
                 unless ( $c->can( $handler ) ) {
                     $Carp::CarpLevel--;

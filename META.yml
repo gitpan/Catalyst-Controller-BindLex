@@ -1,6 +1,6 @@
 ---
 name: Catalyst-Controller-BindLex
-version: 0.02
+version: 0.03
 author: ~
 abstract: Stash your lexical goodness.
 license: perl
@@ -15,5 +15,5 @@ requires:
 provides:
   Catalyst::Controller::BindLex:
     file: lib/Catalyst/Controller/BindLex.pm
-    version: 0.02
+    version: 0.03
 generated_by: Module::Build version 0.2611

@@ -15,17 +15,17 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 1a3e561ee4e351286049b0944f962242bf0bd59d Build.PL
-SHA1 6b83a6fd060b6fae4a87b856b7d103eaeafff541 Changes
+SHA1 1928acb5647742af1d9813552eeaf2abafe80c5f Changes
 SHA1 f3641be2616eb67820f5030f70dbc79acb065e60 MANIFEST
-SHA1 0e2515e4bf28d6997b3219ec812f1f0a434d9fd6 META.yml
+SHA1 057ba49ccd96a2e42aac95dd6c84060fe6881f46 META.yml
 SHA1 efc5660677f7dbbf38a5f6cc4e12a1e5eb32ce4e Makefile.PL
 SHA1 60cf5864fef5bc0291b220871e8f9f95572fde6a README
-SHA1 4a5b43db03e673a89a1fb716be11cb55c5f0e766 lib/Catalyst/Controller/BindLex.pm
+SHA1 613cea3c371d08d650b676bfd55bc34b0e2f7479 lib/Catalyst/Controller/BindLex.pm
 SHA1 b2780f8aba8de3fa82cb0b92d81aca18940a8b03 t/01base.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.1 (Darwin)
 
-iD8DBQFEXpfhVCwRwOvSdBgRArJ6AJ9HpdHqARy8zIJiiqlYsY43JMWx/ACgs5kq
-GRw0chajlj65w6pD3VAca6c=
-=ql9U
+iD8DBQFEet0hVCwRwOvSdBgRAonDAJ9KAOk/PMKKWZuMoPXgjCgz63tc3QCdHNQA
+8HxcKEU0agw2zhZ76mtNTVs=
+=Mi+I
 -----END PGP SIGNATURE-----

@@ -1,3 +1,6 @@
+0.03
+    - Handling of default config changed to be less wrong ;-)
+
 0.02
     - Made stack crawling a little less touchy
 
