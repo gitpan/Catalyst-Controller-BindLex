@@ -16,7 +16,7 @@ use Devel::LexAlias ();
 use Scalar::Util    ();
 use Carp            ();
 
-our $VERSION = '0.03';
+our $VERSION = '0.05';
 
 sub bindlex_default_config {
     map { ucfirst() . 'ed' => $_, ucfirst() => $_} qw/stash session flash/;
@@ -153,6 +153,23 @@ sub _handle_bindlex_attrs {
     @remain;
 }
 
+sub COMPONENT {
+    my $class = shift;
+    $class->_bindlex_setup_warning(@_);
+    return $class->NEXT::COMPONENT(@_);
+}
+
+sub _bindlex_setup_warning {
+    my ($class, $app) = @_;
+    return if $class->config->{unsafe_bindlex_ok};
+    $app->log->warn("****");
+    $app->log->warn("**** IMPORTANT WARNING: BindLex");
+    $app->log->warn("****");
+    $app->log->warn("Controller class $class using Catalyst::Controller::BindLex; this module is unmaintained and considered -dangerous-");
+    $app->log->warn("Please see the documentation for an explanation and how to disable this warning if you want to take the risk");
+    $app->log->warn("****");
+}
+
 1;
 
 __END__
@@ -161,7 +178,7 @@ __END__
 
 =head1 NAME
 
-Catalyst::Controller::BindLex - Stash your lexical goodness.
+Catalyst::Controller::BindLex - Unmaintained, dangerous proof of concept
 
 =head1 SYNOPSIS
 
@@ -194,12 +211,30 @@ Catalyst::Controller::BindLex - Stash your lexical goodness.
         $c->res->body( "request number " . ++$count );
     }
 
+=head1 WARNING
+
+Catalyst::Controller::BindLex does some fairly nasty magic - the attribute
+wrapping tricks are complex and will break if you declare the same lexical
+name twice in the same method, and the approach to get $c out of the call
+stack is hacky and fragile.
+
+It was designed as a PROOF OF CONCEPT ONLY and should not be considered for
+use in production. The authors no longer consider it a viable implementation
+plan and THIS MODULE IS NOT SUPPORTED AND WILL NOT BE MAINTAINED.
+
+If you really want to use it, please read the source code and be sure you
+understand it well enough to fix anything that goes wrong, then set
+
+    __PACKAGE__->config->{unsafe_bindlex_ok} = 1;
+
+in your controller class to suppress the startup warning.
+
 =head1 DESCRIPTION
 
 This plugin lets you put your lexicals on the stash and elsewhere very easily.
 
-It uses some funky modules to get it's job done:  L<PadWalker>,
-L<Array::RefElem>, L<Devel::Caller>, L<Devel::LexAlias> and L<attributes>. In
+It uses some funky modules to get its job done:  L<PadWalker>,
+L<Array::RefElem>, L<Devel::Caller>, L<Devel::LexAlias>, and L<attributes>. In
 some people's opinion this hurts this plugin's reputation ;-).
 
 If you use the same name for two variables with the same storage binding
@@ -235,11 +270,21 @@ Some default attributes are pre-configured:
 
 =item Flash, Flashed
 
-Bind the variable to a key in C<stash>, C<session> or C<flash> respetively.
+Bind the variable to a key in C<stash>, C<session>, or C<flash> respectively.
 
-The latter two require the use of 
+The latter two require the use of a session; see L<Catalyst::Plugin::Session>.
 
 =back
+
+=head1 METHODS
+
+=head2 bindlex_default_config( )
+
+=head2 MODIFY_ARRAY_ATTRIBUTES( )
+
+=head2 MODIFY_HASH_ATTRIBUTES( )
+
+=head2 MODIFY_SCALAR_ATTRIBUTES( )
 
 =head1 RECIPES
 
@@ -253,7 +298,7 @@ To get
 
 add
 
-    __PACKAGE__->config->{bindlex}{Param} => sub { $_[0]->req->params };
+    __PACKAGE__->config->{bindlex}{Param} = sub { $_[0]->req->params };
 
 =back
 

@@ -12,10 +12,10 @@ SYNOPSIS
             my %y : Stashed;
 
             $x = 100;
-            
-        do_something( $c->stash->{x} ); # 100
         
-        $c->forward( "gorch" );
+            do_something( $c->stash->{x} ); # 100
+    
+            $c->forward( "gorch" );
         }
 
         sub gorch : Private {
@@ -35,8 +35,8 @@ DESCRIPTION
     This plugin lets you put your lexicals on the stash and elsewhere very
     easily.
 
-    It uses some funky modules to get it's job done: PadWalker,
-    Array::RefElem, Devel::Caller, Devel::LexAlias and attributes. In some
+    It uses some funky modules to get its job done: PadWalker,
+    Array::RefElem, Devel::Caller, Devel::LexAlias, and attributes. In some
     people's opinion this hurts this plugin's reputation ;-).
 
     If you use the same name for two variables with the same storage binding
@@ -65,11 +65,17 @@ DEFAULT ATTRIBUTES
     Stash, Stashed
     Session, Sessioned
     Flash, Flashed
-        Bind the variable to a key in "stash", "session" or "flash"
-        respetively.
+        Bind the variable to a key in "stash", "session", or "flash"
+        respectively.
 
-        The latter two require the use of
+        The latter two require the use of a session; see
+        Catalyst::Plugin::Session.
 
+METHODS
+  bindlex_default_config( )
+  MODIFY_ARRAY_ATTRIBUTES( )
+  MODIFY_HASH_ATTRIBUTES( )
+  MODIFY_SCALAR_ATTRIBUTES( )
 RECIPES
     Param
         To get
